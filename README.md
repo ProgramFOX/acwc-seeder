@@ -6,7 +6,7 @@ Finds seeding ratings for the Qualification part of the [Antichess World Champio
 
 The tool makes use of the [Lichess database PGN exports](https://database.lichess.org/).
 
-You need the Antichess database file from September 2018 (included) up to August 2019 (included).
+You need the Antichess database files from September 2018 (included) up to August 2019 (included).
 
 Place these files in their separate directory. This directory must have no less and no more files
 than the aforementioned database export files!
