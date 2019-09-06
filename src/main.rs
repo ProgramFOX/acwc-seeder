@@ -43,10 +43,9 @@ fn main() {
 
         for line in reader.lines() {
             let line = line.unwrap();
-            let trimmed = line.trim();
-            if trimmed != "" {
-                let mut split_quotes = trimmed.split('"');
-                if trimmed.starts_with('1') {
+            if line != "" {
+                let mut split_quotes = line.split('"');
+                if line.starts_with('1') {
                     if white == player || black == player {
                         let rating_after = if white == player {
                             white_elo + white_rating_diff
@@ -76,23 +75,23 @@ fn main() {
                             latest_rating_game_url = game_url.clone();
                         }
                     }
-                } else if trimmed.starts_with("[Site ") {
+                } else if line.starts_with("[Site ") {
                     game_url = split_quotes.nth(1).unwrap().to_string();
-                } else if trimmed.starts_with("[White ") {
+                } else if line.starts_with("[White ") {
                     white = split_quotes.nth(1).unwrap().to_lowercase();
-                } else if trimmed.starts_with("[Black ") {
+                } else if line.starts_with("[Black ") {
                     black = split_quotes.nth(1).unwrap().to_lowercase();
-                } else if trimmed.starts_with("[WhiteElo ") {
+                } else if line.starts_with("[WhiteElo ") {
                     white_elo = split_quotes.nth(1).unwrap().parse().unwrap();
-                } else if trimmed.starts_with("[BlackElo ") {
+                } else if line.starts_with("[BlackElo ") {
                     black_elo = split_quotes.nth(1).unwrap().parse().unwrap();
-                } else if trimmed.starts_with("[WhiteRatingDiff ") {
+                } else if line.starts_with("[WhiteRatingDiff ") {
                     white_rating_diff = split_quotes.nth(1).unwrap().parse().unwrap();
-                } else if trimmed.starts_with("[BlackRatingDiff ") {
+                } else if line.starts_with("[BlackRatingDiff ") {
                     black_rating_diff = split_quotes.nth(1).unwrap().parse().unwrap();
-                } else if trimmed.starts_with("[UTCDate ") {
+                } else if line.starts_with("[UTCDate ") {
                     utc_date = split_quotes.nth(1).unwrap().to_string();
-                } else if trimmed.starts_with("[UTCTime ") {
+                } else if line.starts_with("[UTCTime ") {
                     utc_time = split_quotes.nth(1).unwrap().to_string();
                 }
             }
