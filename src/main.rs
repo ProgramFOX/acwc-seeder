@@ -43,57 +43,55 @@ fn main() {
 
         for line in reader.lines() {
             let line = line.unwrap();
-            if line != "" {
-                let mut split_quotes = line.split('"');
-                if line.starts_with('1') {
-                    if white == player || black == player {
-                        let rating_after = if white == player {
-                            white_elo + white_rating_diff
-                        } else {
-                            black_elo + black_rating_diff
-                        };
+            let mut split_quotes = line.split('"');
+            if line.starts_with('1') {
+                if white == player || black == player {
+                    let rating_after = if white == player {
+                        white_elo + white_rating_diff
+                    } else {
+                        black_elo + black_rating_diff
+                    };
 
-                        if rating_after > highest_rating {
-                            highest_rating = rating_after;
-                            highest_rating_game_url = game_url.clone();
-                        }
-
-                        let mut date_split = utc_date.split('.');
-                        let mut time_split = utc_time.split(':');
-                        let game_time: (i32, i32, i32, i32, i32, i32) = (
-                            date_split.next().unwrap().parse().unwrap(),
-                            date_split.next().unwrap().parse().unwrap(),
-                            date_split.next().unwrap().parse().unwrap(),
-                            time_split.next().unwrap().parse().unwrap(),
-                            time_split.next().unwrap().parse().unwrap(),
-                            time_split.next().unwrap().parse().unwrap(),
-                        );
-
-                        if game_time > latest_rating_time {
-                            latest_rating_time = game_time;
-                            latest_rating = rating_after;
-                            latest_rating_game_url = game_url.clone();
-                        }
+                    if rating_after > highest_rating {
+                        highest_rating = rating_after;
+                        highest_rating_game_url = game_url.clone();
                     }
-                } else if line.starts_with("[Site ") {
-                    game_url = split_quotes.nth(1).unwrap().to_string();
-                } else if line.starts_with("[White ") {
-                    white = split_quotes.nth(1).unwrap().to_lowercase();
-                } else if line.starts_with("[Black ") {
-                    black = split_quotes.nth(1).unwrap().to_lowercase();
-                } else if line.starts_with("[WhiteElo ") {
-                    white_elo = split_quotes.nth(1).unwrap().parse().unwrap();
-                } else if line.starts_with("[BlackElo ") {
-                    black_elo = split_quotes.nth(1).unwrap().parse().unwrap();
-                } else if line.starts_with("[WhiteRatingDiff ") {
-                    white_rating_diff = split_quotes.nth(1).unwrap().parse().unwrap();
-                } else if line.starts_with("[BlackRatingDiff ") {
-                    black_rating_diff = split_quotes.nth(1).unwrap().parse().unwrap();
-                } else if line.starts_with("[UTCDate ") {
-                    utc_date = split_quotes.nth(1).unwrap().to_string();
-                } else if line.starts_with("[UTCTime ") {
-                    utc_time = split_quotes.nth(1).unwrap().to_string();
+
+                    let mut date_split = utc_date.split('.');
+                    let mut time_split = utc_time.split(':');
+                    let game_time: (i32, i32, i32, i32, i32, i32) = (
+                        date_split.next().unwrap().parse().unwrap(),
+                        date_split.next().unwrap().parse().unwrap(),
+                        date_split.next().unwrap().parse().unwrap(),
+                        time_split.next().unwrap().parse().unwrap(),
+                        time_split.next().unwrap().parse().unwrap(),
+                        time_split.next().unwrap().parse().unwrap(),
+                    );
+
+                    if game_time > latest_rating_time {
+                        latest_rating_time = game_time;
+                        latest_rating = rating_after;
+                        latest_rating_game_url = game_url.clone();
+                    }
                 }
+            } else if line.starts_with("[Site ") {
+                game_url = split_quotes.nth(1).unwrap().to_string();
+            } else if line.starts_with("[White ") {
+                white = split_quotes.nth(1).unwrap().to_lowercase();
+            } else if line.starts_with("[Black ") {
+                black = split_quotes.nth(1).unwrap().to_lowercase();
+            } else if line.starts_with("[WhiteElo ") {
+                white_elo = split_quotes.nth(1).unwrap().parse().unwrap();
+            } else if line.starts_with("[BlackElo ") {
+                black_elo = split_quotes.nth(1).unwrap().parse().unwrap();
+            } else if line.starts_with("[WhiteRatingDiff ") {
+                white_rating_diff = split_quotes.nth(1).unwrap().parse().unwrap();
+            } else if line.starts_with("[BlackRatingDiff ") {
+                black_rating_diff = split_quotes.nth(1).unwrap().parse().unwrap();
+            } else if line.starts_with("[UTCDate ") {
+                utc_date = split_quotes.nth(1).unwrap().to_string();
+            } else if line.starts_with("[UTCTime ") {
+                utc_time = split_quotes.nth(1).unwrap().to_string();
             }
         }
     }
